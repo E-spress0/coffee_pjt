@@ -32,7 +32,7 @@
 	
 	<context-param>
 	    <param-name>contextConfigLocation</param-name>
-	    <param-value>classpath*:database/db_connecter/*-context.xml</param-value>
+	    <param-value>classpath*:/database/db_connecter/*-*.xml</param-value>
 	</context-param>
 
 </web-app>
