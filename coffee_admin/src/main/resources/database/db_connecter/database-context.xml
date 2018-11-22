@@ -46,7 +46,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.dongwonfarms.www" />
+        <property name="basePackage" value="com.coffee_admin.www" />
         <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
     </bean>
 
@@ -64,7 +64,7 @@
 		</tx:attributes>
 	</tx:advice>
   	<aop:config>
-    	<aop:pointcut expression="execution(public * com.dongwonfarms.www.front.*.service.*Service.*(..))" id="daoMethodMatcher"/>
+    	<aop:pointcut expression="execution(public * com.coffee_admin.www.*.service.*Service.*(..))" id="daoMethodMatcher"/>
     	<aop:advisor advice-ref="txAdvisor" pointcut-ref="daoMethodMatcher" id="transactionAdvisor"/>
     </aop:config>
     
