@@ -5,7 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" href="resources/asset/css/default_css.css" type="text/css" media="screen">
-	<title>Convenient Board</title>
+	<title>Convenient Board(편리한 게시판)</title>
 </head>
 <body>
 	<jsp:include page="../default_layout/header.jsp"></jsp:include>

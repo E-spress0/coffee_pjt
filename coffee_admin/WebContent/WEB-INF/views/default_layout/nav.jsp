@@ -2,7 +2,7 @@
 <nav>
 	<div>
 		<div>
-			<a href="#">게시판</a>
+			<a href="/board">게시판</a>
 		</div>
 		<div>
 			<a href="#">게시판 관리</a>

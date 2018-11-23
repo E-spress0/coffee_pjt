@@ -19,7 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.coffee_admin.www.model.HomeModel;
-import com.coffee_admin.www.service.HomeServiceImpl;
+import com.coffee_admin.www.model.board.BoardModel;
+import com.coffee_admin.www.service.board.BoardServiceImpl;
+import com.coffee_admin.www.service.home.HomeServiceImpl;
 
 /**
  * Handles requests for the application home page.
@@ -30,6 +32,9 @@ public class HomeController {
 
 	@Autowired
 	HomeServiceImpl hService;
+
+	@Autowired
+	BoardServiceImpl bService;
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -61,5 +66,14 @@ public class HomeController {
 	public String main(Model model, HttpSession session) throws Exception {
 
 		return "main/main";
+	}
+
+	@RequestMapping(value = "/board", method = RequestMethod.GET)
+	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardModel) throws Exception {
+		List<BoardModel> list = bService.selectBoardList();
+
+		model.addAttribute("boardInfo", list);
+
+		return "board/board_list";
 	}
 }
