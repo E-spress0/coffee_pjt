@@ -66,7 +66,7 @@
 		</tx:attributes>
 	</tx:advice>
   	<aop:config>
-    	<aop:pointcut expression="execution(public * com.coffee_admin.www.*.service.*Service.*(..))" id="daoMethodMatcher"/>
+    	<aop:pointcut expression="execution(public * com.coffee_admin.www.service.*Service.*(..))" id="daoMethodMatcher"/>
     	<aop:advisor advice-ref="txAdvisor" pointcut-ref="daoMethodMatcher" id="transactionAdvisor"/>
     </aop:config>
     
