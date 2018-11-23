@@ -1,0 +1,10 @@
+@charset "UTF-8";
+header div{height: 160px;background: black;}
+header div h1{font-weight: bold;color: white;}
+nav div{height: 80px;background: skyblue;}
+nav div div{height:50px ;width: 170px; float: left;padding-top: 30px;text-align: center;}
+nav div div:hover{-webkit-transition:all 0.5s; background: black;}
+nav div div a{text-decoration: none; color: white; font-size: 20px; font-weight: bold;}
+section div{height: 500px;background: silver;}
+footer div{height: 130px;background: black;}
+footer h3{font-weight: bold;color: white;}

@@ -18,5 +18,4 @@ public class HomeServiceImpl implements HomeService<HomeModel> {
 	public List<HomeModel> selectHome() throws Exception {
 		return homeMapper.selectHome();
 	}
-
 }
