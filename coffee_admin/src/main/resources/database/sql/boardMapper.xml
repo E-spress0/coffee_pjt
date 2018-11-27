@@ -3,7 +3,14 @@
 <mapper namespace="com.coffee_admin.www.mapper.board.BoardMapper">
 
 	<select id="selectBoardList" resultType="BoardModel" >
-		SELECT * FROM PRE_BOARD_TBL
+		SELECT * 
+		FROM PRE_BOARD_TBL
+		ORDER BY SEQ DESC
+	</select>
+	
+	<select id="selectBoardCount" resultType="BoardModel">
+		SELECT COUNT(*) AS listCnt
+		FROM PRE_BOARD_TBL
 	</select>
 
 </mapper>

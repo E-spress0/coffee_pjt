@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import org.slf4j.Logger;
@@ -69,8 +71,11 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
-	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardModel) throws Exception {
+	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardMode, @RequestParam(
+	        defaultValue = "1") int curPage, HttpServletRequest req) throws Exception {
 		List<BoardModel> list = bService.selectBoardList();
+		List<BoardModel> listCnt = bService.selectBoardCount();
+		System.out.println(listCnt);
 
 		model.addAttribute("boardInfo", list);
 

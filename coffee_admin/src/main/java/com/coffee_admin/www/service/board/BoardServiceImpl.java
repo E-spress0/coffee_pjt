@@ -19,4 +19,9 @@ public class BoardServiceImpl implements BoardService {
 		return bMapper.selectBoardList();
 	}
 
+	@Override
+	public List<BoardModel> selectBoardCount() throws Exception {
+		return bMapper.selectBoardCount();
+	}
+
 }
