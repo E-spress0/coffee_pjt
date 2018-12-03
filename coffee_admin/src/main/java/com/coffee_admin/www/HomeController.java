@@ -71,13 +71,24 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
-	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardMode, @RequestParam(
+	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardModel, @RequestParam(
 	        defaultValue = "1") int curPage, HttpServletRequest req) throws Exception {
-		List<BoardModel> list = bService.selectBoardList();
-		List<BoardModel> listCnt = bService.selectBoardCount();
-		System.out.println(listCnt);
+		boardModel = bService.selectBoardCount();
+		/*
+		String allListCnt = listCnt.toString();
+		int startListCnt = allListCnt.indexOf("listCnt") + 8;
+		int endListCnt = allListCnt.indexOf(",", startListCnt);
+		boardModel = new BoardModel(Integer.parseInt(allListCnt.substring(startListCnt, endListCnt)), curPage);
+		*/
+		boardModel = new BoardModel(boardModel.getListCnt(), curPage);
+		List<BoardModel> list = bService.selectBoardList(boardModel);
+		System.out.println("this info : " + boardModel);
+		System.out.println("this num : " + curPage);
+		//		System.out.println("this statrt : " + startListCnt);
+		//		System.out.println("this end : " + endListCnt);
 
 		model.addAttribute("boardInfo", list);
+
 
 		return "board/board_list";
 	}

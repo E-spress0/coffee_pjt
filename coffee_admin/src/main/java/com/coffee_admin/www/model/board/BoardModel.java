@@ -15,73 +15,74 @@ public class BoardModel {
 	private String writer;
 	private String title;
 	private String content;
-	/** 한 페이지에 생성되는 게시물 개수 col */
-	private int pageSize = 10;
-
 	/** 한 페이지에 생성되는 페이지 개수 bottom_row */
-	private int rangeSize = 10;
+	private static final int pageSize = 10;
 
-	private int curPage = 1;
-	private int curRange = 1;
+	/** 한 페이지에 생성되는 게시물 개수 col */
+	private static final int board_Size = 10;
+
+	/** 사용자에게 출력되는 현재 페이지 번호 */
+	private int nowPage; //curPage
+
+	/** 총 게시물 수 */
 	private int listCnt;
-	private int pageCnt;
-	private int rangeCnt;
+
+	/** 마지막 페이지 번호 */
+	private int lastPage;
+
 	private int startPage = 1;
 	private int endPage = 1;
-	private int startIndex = 0;
+
+	private int startBoard = 1;
+	private int endBoard = 1;
+
 	private int prevPage;
 	private int nextPage;
 
-
-
-	public BoardModel(int listCnt, int curPage) {
-		setCurPage(curPage);
+	public BoardModel(int listCnt, int nowPage) {
 		setListCnt(listCnt);
-		setPageCnt(listCnt);
-		setRangeCnt(pageCnt);
-		rangeSetting(curPage);
-		setStartIndex(curPage);
-	}
-
-	public int getCurPage() {
-		return curPage;
-	}
-
-	public void setCurPage(int curPage) {
-		this.curPage = curPage;
-	}
-
-	public int getListCnt() {
-		return listCnt;
+		setNowPage(nowPage);
+		setLastPage(listCnt);
+		if (nowPage > 10) {
+			setStartPage(nowPage);
+		}
+		setEndPage(nowPage);
+		setStartBoard(nowPage);
+		setEndBoard(listCnt, nowPage);
 	}
 
 	public void setListCnt(int listCnt) {
 		this.listCnt = listCnt;
 	}
 
-	public void setPageCnt(int listCnt) {
-		this.pageCnt = (int) Math.ceil(listCnt * 1.0 / pageSize);
+	public void setNowPage(int nowPage) {
+		this.nowPage = nowPage;
 	}
 
-	public void setRangeCnt(int pageCnt) {
-		this.rangeCnt = (int) Math.ceil(pageCnt * 1.0 / rangeSize);
+	public void setLastPage(int listCnt) {
+		this.lastPage = (listCnt % pageSize > 0) ? listCnt / pageSize + 1 : listCnt / pageSize;
 	}
 
-	public void rangeSetting(int curPage) {
-		setCurRange(curPage);
-		this.startPage = (curRange - 1) * rangeSize + 1;
-		if (endPage > pageCnt) {
-			this.endPage = pageCnt;
+	public void setStartPage(int nowPage) {
+		this.startPage = nowPage / pageSize * pageSize + 1;
+	}
+
+	public void setEndPage(int nowPage) {
+		if (nowPage > 10 && lastPage > 10) {
+			this.endPage = ((nowPage / 10 * 10 + 10) >= lastPage) ? lastPage : nowPage / 10 * 10 + 10;
+		} else if (nowPage > 0 && lastPage > 10) {
+			this.endPage = 10;
+		} else {
+			this.endPage = lastPage;
 		}
-		this.prevPage = curPage - 1;
-		this.nextPage = curPage + 1;
 	}
 
-	public void setCurRange(int curPage) {
-		this.curRange = (curPage - 1) / rangeSize + 1;
+	public void setStartBoard(int nowPage) {
+		this.startBoard = (nowPage - 1) * board_Size + 1;
 	}
 
-	public void setStartIndex(int curPage) {
-		this.startIndex = (curPage - 1) * pageSize;
+	public void setEndBoard(int listCnt, int nowPage) {
+		this.endBoard = ((nowPage - 1) * board_Size + 10 <= listCnt) ? (nowPage - 1) * board_Size + 10 : listCnt;
 	}
+
 }

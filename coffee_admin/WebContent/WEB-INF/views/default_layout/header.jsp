@@ -3,7 +3,7 @@
 		<div>
 			<br>
 			<h1 align="center">
-				Convenient Board
+				<a href="/main">Convenient Board</a>
 			</h1>
 		</div>
 	</header>

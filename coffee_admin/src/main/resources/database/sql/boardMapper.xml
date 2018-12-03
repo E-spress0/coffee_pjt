@@ -2,15 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.coffee_admin.www.mapper.board.BoardMapper">
 
-	<select id="selectBoardList" resultType="BoardModel" >
-		SELECT * 
-		FROM PRE_BOARD_TBL
-		ORDER BY SEQ DESC
+	<select id="selectBoardList" resultType="BoardModel"  parameterType="BoardModel">
+		SELECT *
+		FROM
+			PRE_BOARD_TBL
+		WHERE
+			SEQ BETWEEN #{startBoard} AND #{endBoard}
+		ORDER
+			BY SEQ DESC
 	</select>
 	
 	<select id="selectBoardCount" resultType="BoardModel">
-		SELECT COUNT(*) AS listCnt
-		FROM PRE_BOARD_TBL
+		SELECT
+			COUNT(*) AS listCnt
+		FROM
+			PRE_BOARD_TBL
 	</select>
 
 </mapper>

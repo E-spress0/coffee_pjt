@@ -15,12 +15,12 @@ public class BoardServiceImpl implements BoardService {
 	BoardMapper bMapper;
 
 	@Override
-	public List<BoardModel> selectBoardList() throws Exception {
-		return bMapper.selectBoardList();
+	public List<BoardModel> selectBoardList(BoardModel boardModel) throws Exception {
+		return bMapper.selectBoardList(boardModel);
 	}
 
 	@Override
-	public List<BoardModel> selectBoardCount() throws Exception {
+	public BoardModel selectBoardCount() throws Exception {
 		return bMapper.selectBoardCount();
 	}
 

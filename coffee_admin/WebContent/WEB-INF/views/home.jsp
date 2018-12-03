@@ -17,4 +17,14 @@
 		<textarea rows="10" cols="10">113</textarea>
 	</form>   
 </body>
+<script type="text/javascript">
+test();
+function test() {
+	var test1 = 123;
+	var test2 = "123";
+
+	(test1 == test2)? alert("o") : alert("x");
+	(test1 === test2)? alert("o") : alert("x");
+}
+</script>
 </html>
