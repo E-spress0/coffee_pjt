@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.coffee_admin.www.mapper.board.BoardMapper">
 
-	<select id="selectBoardList" resultType="BoardModel"  parameterType="BoardModel">
+	<select id="selectBoardList" resultType="BoardModel"  parameterType="BoardPagingModel">
 		SELECT *
 		FROM
 			PRE_BOARD_TBL
@@ -12,7 +12,7 @@
 			BY SEQ DESC
 	</select>
 	
-	<select id="selectBoardCount" resultType="BoardModel">
+	<select id="selectBoardCount" resultType="BoardPagingModel">
 		SELECT
 			COUNT(*) AS listCnt
 		FROM

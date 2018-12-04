@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.coffee_admin.www.model.HomeModel;
 import com.coffee_admin.www.model.board.BoardModel;
+import com.coffee_admin.www.model.board.BoardPagingModel;
 import com.coffee_admin.www.service.board.BoardServiceImpl;
 import com.coffee_admin.www.service.home.HomeServiceImpl;
 
@@ -71,18 +72,19 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
-	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardModel, @RequestParam(
-	        defaultValue = "1") int curPage, HttpServletRequest req) throws Exception {
-		boardModel = bService.selectBoardCount();
+	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardModel,
+	        @ModelAttribute BoardPagingModel boardPagingModel, @RequestParam(defaultValue = "1") int curPage,
+	        HttpServletRequest req) throws Exception {
+		boardPagingModel = bService.selectBoardCount();
 		/*
 		String allListCnt = listCnt.toString();
 		int startListCnt = allListCnt.indexOf("listCnt") + 8;
 		int endListCnt = allListCnt.indexOf(",", startListCnt);
 		boardModel = new BoardModel(Integer.parseInt(allListCnt.substring(startListCnt, endListCnt)), curPage);
 		*/
-		boardModel = new BoardModel(boardModel.getListCnt(), curPage);
-		List<BoardModel> list = bService.selectBoardList(boardModel);
-		System.out.println("this info : " + boardModel);
+		boardPagingModel = new BoardPagingModel(boardPagingModel.getListCnt(), curPage);
+		List<BoardModel> list = bService.selectBoardList(boardPagingModel);
+		System.out.println("this info : " + boardPagingModel);
 		System.out.println("this num : " + curPage);
 		//		System.out.println("this statrt : " + startListCnt);
 		//		System.out.println("this end : " + endListCnt);

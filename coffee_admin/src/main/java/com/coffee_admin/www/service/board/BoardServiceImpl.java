@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.coffee_admin.www.mapper.board.BoardMapper;
 import com.coffee_admin.www.model.board.BoardModel;
+import com.coffee_admin.www.model.board.BoardPagingModel;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -15,12 +16,12 @@ public class BoardServiceImpl implements BoardService {
 	BoardMapper bMapper;
 
 	@Override
-	public List<BoardModel> selectBoardList(BoardModel boardModel) throws Exception {
-		return bMapper.selectBoardList(boardModel);
+	public List<BoardModel> selectBoardList(BoardPagingModel boardPagingModel) throws Exception {
+		return bMapper.selectBoardList(boardPagingModel);
 	}
 
 	@Override
-	public BoardModel selectBoardCount() throws Exception {
+	public BoardPagingModel selectBoardCount() throws Exception {
 		return bMapper.selectBoardCount();
 	}
 
