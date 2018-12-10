@@ -11,12 +11,23 @@
 <jsp:include page="../default_layout/header.jsp"/>
 <jsp:include page="../default_layout/nav.jsp"/>
 <section>
-	<div align="center">
-		<table>
+	<div class="list" align="center">
+	<br/>
+		<form action="searchList" style="padding-top: 40px;">
+			<select class="sBox" name="sType">
+				<option value="1" selected="selected">제목</option>
+				<option value="2">내용</option>
+				<option value="3">제목 + 내용</option>
+				<option value="4">작성자</option>
+			</select>
+			<input type="search" class="search" name="sData">
+			<input type="submit" class="sButton" value="검색">
+		</form>
+		<table border="1">
 			<thead>
 				<tr>
-					<td class="ss_td">번호</td>
-					<td class="n_td">제목</td>
+					<td class="sx_td">번호</td>
+					<td class="xxx_td">제목</td>
 					<td class="s_td">작성자</td>
 				</tr>
 			</thead>
@@ -24,14 +35,28 @@
 				<c:forEach items="${boardInfo}" var="board">
 					<tr>
 						<td>${board.seq}</td>
-						<td>${board.writer}</td>
 						<td>${board.title}</td>
+						<td>${board.writer}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<button type="button" onclick="list(1);"><<</button>
+		<button type="button" onclick="list(${thisBoardInfo.prevPage});"><</button>
+		<c:set var="start" value="${thisBoardInfo.startPage}"/>
+		<c:set var="end" value="${thisBoardInfo.endPage}"/>
+		<c:forEach begin="${start}" end="${end}" varStatus="stat">
+			<a href="board?curPage=${stat.index}">${stat.index}</a>
+		</c:forEach>
+		<button type="button"onclick="list(${thisBoardInfo.nextPage});">></button>
+		<button type="button" onclick="list(${thisBoardInfo.lastPage});">>></button>
 	</div>
 </section>
 <jsp:include page="../default_layout/footer.jsp"/>
 </body>
+<script type="text/javascript">
+	function list(page) {
+		location.href = "/board?curPage="+page;
+	}
+</script>
 </html>

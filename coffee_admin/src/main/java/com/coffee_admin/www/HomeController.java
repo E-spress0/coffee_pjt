@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,14 +85,36 @@ public class HomeController {
 		*/
 		boardPagingModel = new BoardPagingModel(boardPagingModel.getListCnt(), curPage);
 		List<BoardModel> list = bService.selectBoardList(boardPagingModel);
-		System.out.println("this info : " + boardPagingModel);
+		if (!ObjectUtils.isEmpty(list)) {
+			model.addAttribute("thisBoardInfo", boardPagingModel);
+			System.out.println("this info : " + boardPagingModel + "\nnonePickData : " + list.get(0)
+			        + "\nTHIS TOP SEQ! : " + list.get(0).getSeq().toString());
+		} else {
+			System.out.println("게시판 목록 없음");
+			System.out.println(list);
+		}
+
 		System.out.println("this num : " + curPage);
 		//		System.out.println("this statrt : " + startListCnt);
 		//		System.out.println("this end : " + endListCnt);
 
 		model.addAttribute("boardInfo", list);
 
+		return "board/board_list";
+	}
 
+	@RequestMapping(value = "searchList", method = RequestMethod.GET)
+	public String searchBoard(Model model, HttpSession session, @ModelAttribute BoardModel boardModel,
+	        @ModelAttribute BoardPagingModel boardPagingModel, @RequestParam(defaultValue = "1") int curPage,
+	        HttpServletRequest req) throws Exception {
+		if (!ObjectUtils.isEmpty(req.getParameter("sType")) && !ObjectUtils.isEmpty(req.getParameter("sData"))) {
+			boardPagingModel = bService.selectBoardCount();
+			boardPagingModel.setKey(req.getParameter("sType"));
+			boardPagingModel.setKey(req.getParameter("sData"));
+			boardPagingModel = new BoardPagingModel(boardPagingModel.getListCnt(), curPage);
+			List<BoardModel> list = bService.selectBoardList(boardPagingModel);
+			model.addAttribute("boardInfo", list);
+		}
 		return "board/board_list";
 	}
 }

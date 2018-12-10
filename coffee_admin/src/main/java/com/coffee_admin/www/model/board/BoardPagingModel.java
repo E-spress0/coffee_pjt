@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class BoardPagingModel {
 
-	//객체없는 생성자 인스턴스 초기화
+	/** 객체없는 생성자 인스턴스 초기화 */
 	protected BoardPagingModel() {}
 
 	/** 한 페이지에 생성되는 페이지 개수 bottom_row */
@@ -15,7 +15,7 @@ public class BoardPagingModel {
 	private static final int board_Size = 10;
 
 	/** 사용자에게 출력되는 현재 페이지 번호 */
-	private int nowPage; //curPage
+	private int nowPage = 1; //curPage
 
 	/** 총 게시물 수 */
 	private int listCnt;
@@ -41,17 +41,23 @@ public class BoardPagingModel {
 	/** 다음 페이지 */
 	private int nextPage;
 
+	/** 검색 */
+	private String key; //sType
+	private String word; //sData
+
 	public BoardPagingModel(int listCnt, int nowPage) {
 		setListCnt(listCnt);
+		setNowPage(nowPage);
 		setLastPage(listCnt);
 		//		setNowPage(this.lastPage - nowPage + 1);
-		setNowPage(nowPage);
-		if (nowPage > 10) {
-			setStartPage(nowPage);
+		if (this.nowPage > 10) {
+			setStartPage(this.nowPage);
 		}
-		setEndPage(nowPage);
+		setEndPage(this.nowPage);
 		setStartBoard();
-		setEndBoard(listCnt);
+		setEndBoard(this.listCnt);
+		setPrevPage();
+		setNextPage();
 	}
 
 	public void setListCnt(int listCnt) {
@@ -59,11 +65,12 @@ public class BoardPagingModel {
 	}
 
 	public void setNowPage(int nowPage) {
-		this.nowPage = nowPage;
+		int intLength = (int) (Math.log10(nowPage) + 1);
+		this.nowPage = (nowPage < 1) ? 1 : (intLength > 9) ? 1 : nowPage;
 	}
 
 	public void setLastPage(int listCnt) {
-		this.lastPage = (listCnt % pageSize > 0) ? listCnt / pageSize + 1 : listCnt / pageSize;
+		this.lastPage = (listCnt % board_Size > 0) ? listCnt / board_Size + 1 : listCnt / board_Size;
 	}
 
 	public void setStartPage(int nowPage) {
@@ -73,7 +80,8 @@ public class BoardPagingModel {
 	public void setEndPage(int nowPage) {
 		/*if (nowPage > 10 && lastPage > 10) {*/
 		if (lastPage > 10) {
-			this.endPage = (((nowPage - 1) / 10 * 10 + 10) >= lastPage) ? lastPage : (nowPage - 1) / 10 * 10 + 10;
+			this.endPage = (((nowPage - 1) / pageSize * pageSize + pageSize) >= lastPage) ? lastPage
+			        : (nowPage - 1) / pageSize * pageSize + pageSize;
 		} /*else if (nowPage > 0 && lastPage > 10) {
 		  this.endPage = 10;
 		  }*/ else {
@@ -81,26 +89,35 @@ public class BoardPagingModel {
 		}
 	}
 
-	/*public void setStartBoard() {
-		this.startBoard = (this.nowPage - 1) * board_Size + 1;
-	}
-	
-	public void setEndBoard(int listCnt) {
-		this.endBoard = ((this.nowPage - 1) * board_Size + 10 <= listCnt) ? (this.nowPage - 1) * board_Size + 10
-		        : listCnt;
-	}*/
-
 	public void setStartBoard() {
-		this.startBoard = this.listCnt - ((this.nowPage - 1) * board_Size + 9);
+		this.startBoard = (this.nowPage - 1) * board_Size;
+	}
+
+	public void setEndBoard(int listCnt) {
+		this.endBoard = ((this.nowPage - 1) * board_Size + 10 <= listCnt) ? (this.nowPage - 1) * board_Size + 9
+		        : listCnt;
+	}
+
+	/*public void setStartBoard() {
+		this.startBoard = this.listCnt - ((this.nowPage - 1) * board_Size + (board_Size - 1));
 		if (this.startBoard < 0) {
 			this.startBoard = 0;
 		}
 	}
-
+	
 	public void setEndBoard(int listCnt) {
 		this.endBoard = this.listCnt - ((this.nowPage - 1) * board_Size);
-		/*if (this.startBoard == 0) {
+		if (this.startBoard == 0) {
 			this.endBoard = 0;
-		}*/
+		}
+	}*/
+
+	public void setNextPage() {
+		this.nextPage = ((this.nowPage + 1) > this.lastPage) ? this.lastPage : this.nowPage + 1;
 	}
+
+	public void setPrevPage() {
+		this.prevPage = ((this.nowPage - 1) < 1) ? 1 : this.nowPage - 1;
+	}
+
 }

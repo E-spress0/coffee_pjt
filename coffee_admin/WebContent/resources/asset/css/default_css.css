@@ -1,4 +1,6 @@
 @charset "UTF-8";
+
+/* layer */
 header div{height: 160px;background: black;}
 header div h1{font-weight: bold;color: white;}
 nav div{height: 80px;background: skyblue;}
@@ -8,3 +10,20 @@ nav div div a{text-decoration: none; color: white; font-size: 20px; font-weight:
 section div{height: 500px;background: silver;}
 footer div{height: 130px;background: black;}
 footer h3{font-weight: bold;color: white;}
+
+/* table td */
+.sxx_td{width: 60px;}
+.sx_td{width: 80px;}
+.s_td{width: 120px;}
+.n_td{width: 140px;}
+.x_td{width: 180px;}
+.xx_td{width: 220px;}
+.xxx_td{width: 260px;}
+
+/* tag */
+table{text-align: center;margin-top: 15px;}
+
+/* class */
+.search{width: 300px;padding-bottom: 2px;height: 30px;}
+.sBox{width: 90;height: 30px;}
+.sButton{width: 60px;height: 30px;}

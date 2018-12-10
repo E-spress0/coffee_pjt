@@ -6,10 +6,8 @@
 		SELECT *
 		FROM
 			PRE_BOARD_TBL
-		WHERE
-			SEQ BETWEEN #{startBoard} AND #{endBoard}
-		ORDER
-			BY SEQ DESC
+		ORDER BY SEQ DESC
+		LIMIT #{startBoard},#{board_Size}
 	</select>
 	
 	<select id="selectBoardCount" resultType="BoardPagingModel">
