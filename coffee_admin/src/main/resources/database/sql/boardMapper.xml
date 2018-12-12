@@ -6,6 +6,10 @@
 		SELECT *
 		FROM
 			PRE_BOARD_TBL
+		<if test="key != null and word != null">
+		WHERE
+			${key} like CONCAT('%',#{word},'%')
+		</if>
 		ORDER BY SEQ DESC
 		LIMIT #{startBoard},#{board_Size}
 	</select>
@@ -15,6 +19,10 @@
 			COUNT(*) AS listCnt
 		FROM
 			PRE_BOARD_TBL
+		<if test="key != null and word != null">
+		WHERE
+			${key} like CONCAT('%',#{word},'%')
+		</if>
 	</select>
 
 </mapper>

@@ -42,10 +42,11 @@ public class BoardPagingModel {
 	private int nextPage;
 
 	/** 검색 */
+	private int numberKey; //sType
 	private String key; //sType
 	private String word; //sData
 
-	public BoardPagingModel(int listCnt, int nowPage) {
+	public BoardPagingModel(int listCnt, int nowPage, int key, String word) {
 		setListCnt(listCnt);
 		setNowPage(nowPage);
 		setLastPage(listCnt);
@@ -58,26 +59,28 @@ public class BoardPagingModel {
 		setEndBoard(this.listCnt);
 		setPrevPage();
 		setNextPage();
+		setKeys(key);
+		setWord(word);
 	}
 
-	public void setListCnt(int listCnt) {
+	private void setListCnt(int listCnt) {
 		this.listCnt = listCnt;
 	}
 
-	public void setNowPage(int nowPage) {
+	private void setNowPage(int nowPage) {
 		int intLength = (int) (Math.log10(nowPage) + 1);
 		this.nowPage = (nowPage < 1) ? 1 : (intLength > 9) ? 1 : nowPage;
 	}
 
-	public void setLastPage(int listCnt) {
+	private void setLastPage(int listCnt) {
 		this.lastPage = (listCnt % board_Size > 0) ? listCnt / board_Size + 1 : listCnt / board_Size;
 	}
 
-	public void setStartPage(int nowPage) {
+	private void setStartPage(int nowPage) {
 		this.startPage = (nowPage - 1) / pageSize * pageSize + 1;
 	}
 
-	public void setEndPage(int nowPage) {
+	private void setEndPage(int nowPage) {
 		/*if (nowPage > 10 && lastPage > 10) {*/
 		if (lastPage > 10) {
 			this.endPage = (((nowPage - 1) / pageSize * pageSize + pageSize) >= lastPage) ? lastPage
@@ -89,11 +92,11 @@ public class BoardPagingModel {
 		}
 	}
 
-	public void setStartBoard() {
+	private void setStartBoard() {
 		this.startBoard = (this.nowPage - 1) * board_Size;
 	}
 
-	public void setEndBoard(int listCnt) {
+	private void setEndBoard(int listCnt) {
 		this.endBoard = ((this.nowPage - 1) * board_Size + 10 <= listCnt) ? (this.nowPage - 1) * board_Size + 9
 		        : listCnt;
 	}
@@ -112,12 +115,33 @@ public class BoardPagingModel {
 		}
 	}*/
 
-	public void setNextPage() {
+	private void setNextPage() {
 		this.nextPage = ((this.nowPage + 1) > this.lastPage) ? this.lastPage : this.nowPage + 1;
 	}
 
-	public void setPrevPage() {
+	private void setPrevPage() {
 		this.prevPage = ((this.nowPage - 1) < 1) ? 1 : this.nowPage - 1;
+	}
+
+	public void setKeys(int key) {
+		this.numberKey = key;
+		switch (key) {
+			case 1:
+				this.key = "title";
+				break;
+			case 3:
+				this.key = "content";
+				break;
+			case 4:
+				this.key = "writer";
+				break;
+			default:
+				break;
+		}
+	}
+
+	public void setWord(String word) {
+		this.word = word;
 	}
 
 }

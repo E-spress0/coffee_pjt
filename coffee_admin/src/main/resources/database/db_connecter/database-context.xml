@@ -58,8 +58,8 @@
 
    	<tx:advice id="txAdvisor" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="get*List" propagation="REQUIRED" read-only="true" />
-			<tx:method name="get*" propagation="REQUIRED" />
+			<tx:method name="select*List" propagation="REQUIRED" read-only="true" />
+			<tx:method name="select*" propagation="REQUIRED" />
 			<tx:method name="ins*" propagation="REQUIRED" />
 			<tx:method name="upd*" propagation="REQUIRED" />
 			<tx:method name="del*" propagation="REQUIRED" />

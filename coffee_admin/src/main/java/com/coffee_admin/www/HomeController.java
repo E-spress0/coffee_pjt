@@ -72,18 +72,18 @@ public class HomeController {
 		return "main/main";
 	}
 
+	//default 게시판
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardModel,
 	        @ModelAttribute BoardPagingModel boardPagingModel, @RequestParam(defaultValue = "1") int curPage,
 	        HttpServletRequest req) throws Exception {
-		boardPagingModel = bService.selectBoardCount();
 		/*
 		String allListCnt = listCnt.toString();
 		int startListCnt = allListCnt.indexOf("listCnt") + 8;
 		int endListCnt = allListCnt.indexOf(",", startListCnt);
 		boardModel = new BoardModel(Integer.parseInt(allListCnt.substring(startListCnt, endListCnt)), curPage);
 		*/
-		boardPagingModel = new BoardPagingModel(boardPagingModel.getListCnt(), curPage);
+		boardPagingModel = new BoardPagingModel(boardPagingModel.getListCnt(), curPage, 0, "");
 		List<BoardModel> list = bService.selectBoardList(boardPagingModel);
 		if (!ObjectUtils.isEmpty(list)) {
 			model.addAttribute("thisBoardInfo", boardPagingModel);
@@ -108,13 +108,44 @@ public class HomeController {
 	        @ModelAttribute BoardPagingModel boardPagingModel, @RequestParam(defaultValue = "1") int curPage,
 	        HttpServletRequest req) throws Exception {
 		if (!ObjectUtils.isEmpty(req.getParameter("sType")) && !ObjectUtils.isEmpty(req.getParameter("sData"))) {
-			boardPagingModel = bService.selectBoardCount();
-			boardPagingModel.setKey(req.getParameter("sType"));
-			boardPagingModel.setKey(req.getParameter("sData"));
-			boardPagingModel = new BoardPagingModel(boardPagingModel.getListCnt(), curPage);
+
+			int key = Integer.parseInt(req.getParameter("sType"));
+			String word = req.getParameter("sData");
+
+			//키워드 지정
+			boardPagingModel.setKeys(key);
+			boardPagingModel.setWord(word);
+			boardPagingModel = bService.selectBoardCount(boardPagingModel);
+
+			boardPagingModel = new BoardPagingModel(boardPagingModel.getListCnt(), curPage, key, word);
+
+			/*switch (key) {
+				case 1:
+					boardPagingModel.setKey("title");
+					break;
+				case 2:
+					boardPagingModel.setKey("content");
+					break;
+				case 4:
+					boardPagingModel.setKey("writer");
+					break;
+				default:
+					return "redirect:/board/board_list";
+			}
+			
+			boardPagingModel.setNumberKey(key);
+			boardPagingModel.setWord(word);*/
+
 			List<BoardModel> list = bService.selectBoardList(boardPagingModel);
 			model.addAttribute("boardInfo", list);
+			model.addAttribute("thisBoardInfo", boardPagingModel);
+
+			System.out.println("this info : " + boardPagingModel);
+			System.out.println("key : " + key + "word : " + word);
+
+			return "board/board_list";
+		} else {
+			return "redirect:/board";
 		}
-		return "board/board_list";
 	}
 }
