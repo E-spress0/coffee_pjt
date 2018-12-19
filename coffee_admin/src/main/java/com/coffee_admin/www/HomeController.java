@@ -77,6 +77,10 @@ public class HomeController {
 	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardModel,
 	        @ModelAttribute BoardPagingModel boardPagingModel, @RequestParam(defaultValue = "1") int curPage,
 	        HttpServletRequest req) throws Exception {
+
+		boardPagingModel.setKeys(0);
+		boardPagingModel.setWord(null);
+		boardPagingModel = bService.selectBoardCount(boardPagingModel);
 		/*
 		String allListCnt = listCnt.toString();
 		int startListCnt = allListCnt.indexOf("listCnt") + 8;

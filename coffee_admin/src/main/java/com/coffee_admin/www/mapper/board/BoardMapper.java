@@ -11,6 +11,6 @@ import com.coffee_admin.www.model.board.BoardPagingModel;
 public interface BoardMapper {
 	List<BoardModel> selectBoardList(BoardPagingModel boardPagingModel) throws Exception;
 
-	BoardPagingModel selectBoardCount() throws Exception;
+	BoardPagingModel selectBoardCount(BoardPagingModel boardPagingModel) throws Exception;
 
 }

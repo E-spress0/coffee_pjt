@@ -25,33 +25,41 @@
 			<input type="search" class="search" name="sData" value="${thisBoardInfo.word}">
 			<input type="submit" class="sButton" value="검색">
 		</form>
-		<table border="1">
-			<thead>
-				<tr>
-					<td class="sx_td">번호</td>
-					<td class="xxx_td">제목</td>
-					<td class="s_td">작성자</td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${boardInfo}" var="board">
-					<tr>
-						<td>${board.seq}</td>
-						<td>${board.title}</td>
-						<td>${board.writer}</td>
-					</tr>
+		<c:choose>
+			<c:when test="${thisBoardInfo.listCnt ne 0}">
+				<table border="1">
+					<thead>
+						<tr>
+							<td class="sx_td">번호</td>
+							<td class="xxx_td">제목</td>
+							<td class="s_td">작성자</td>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${boardInfo}" var="board">
+							<tr>
+								<td>${board.seq}</td>
+								<td>${board.title}</td>
+								<td>${board.writer}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<button type="button" onclick="list(1);"><<</button>
+				<button type="button" onclick="list(${thisBoardInfo.prevPage});"><</button>
+				<c:set var="start" value="${thisBoardInfo.startPage}"/>
+				<c:set var="end" value="${thisBoardInfo.endPage}"/>
+				<c:forEach begin="${start}" end="${end}" varStatus="stat">
+					<a href="#" onclick="list(${stat.index});">${stat.index}</a>
 				</c:forEach>
-			</tbody>
-		</table>
-		<button type="button" onclick="list(1);"><<</button>
-		<button type="button" onclick="list(${thisBoardInfo.prevPage});"><</button>
-		<c:set var="start" value="${thisBoardInfo.startPage}"/>
-		<c:set var="end" value="${thisBoardInfo.endPage}"/>
-		<c:forEach begin="${start}" end="${end}" varStatus="stat">
-			<a href="#" onclick="list(${stat.index});">${stat.index}</a>
-		</c:forEach>
-		<button type="button"onclick="list(${thisBoardInfo.nextPage});">></button>
-		<button type="button" onclick="list(${thisBoardInfo.lastPage});">>></button>
+				<button type="button"onclick="list(${thisBoardInfo.nextPage});">></button>
+				<button type="button" onclick="list(${thisBoardInfo.lastPage});">>></button>
+			</c:when>
+			<c:otherwise>
+				<span style="padding-top: 25px;">게시글이 없습니다.</span>
+			</c:otherwise>
+		</c:choose>
+		<button type="button" onclick="javascript:location.href='/boardWrite'">글쓰기</button>
 	</div>
 </section>
 <jsp:include page="../default_layout/footer.jsp"/>
@@ -60,7 +68,7 @@
 <script type="text/javascript">
 	function list(page) {
 		if("${thisBoardInfo.numberKey}" != "" && "${thisBoardInfo.word}" != ""){
-			location.href = "/board?curPage="+page+"&sType=${thisBoardInfo.numberKey}&sData=${thisBoardInfo.word}";
+			location.href = "/searchList?curPage="+page+"&sType=${thisBoardInfo.numberKey}&sData=${thisBoardInfo.word}";
 		}else{
 			location.href = "/board?curPage="+page;
 		}

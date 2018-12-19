@@ -98,7 +98,7 @@ public class BoardPagingModel {
 
 	private void setEndBoard(int listCnt) {
 		this.endBoard = ((this.nowPage - 1) * board_Size + 10 <= listCnt) ? (this.nowPage - 1) * board_Size + 9
-		        : listCnt;
+		        : listCnt - 1;
 	}
 
 	/*public void setStartBoard() {

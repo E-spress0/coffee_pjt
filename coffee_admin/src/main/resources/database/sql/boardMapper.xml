@@ -14,7 +14,7 @@
 		LIMIT #{startBoard},#{board_Size}
 	</select>
 	
-	<select id="selectBoardCount" resultType="BoardPagingModel">
+	<select id="selectBoardCount" resultType="BoardPagingModel" parameterType="BoardPagingModel">
 		SELECT
 			COUNT(*) AS listCnt
 		FROM
