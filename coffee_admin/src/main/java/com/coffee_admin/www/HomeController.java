@@ -48,7 +48,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String slash() throws Exception {
-		return "redirect:/main";
+		return "redirect:/login.do";
 	}
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -70,6 +70,11 @@ public class HomeController {
 	public String main(Model model, HttpSession session) throws Exception {
 
 		return "main/main";
+	}
+
+	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
+	public String login() {
+		return "login/login";
 	}
 
 	//default 게시판
@@ -151,5 +156,10 @@ public class HomeController {
 		} else {
 			return "redirect:/board";
 		}
+	}
+
+	@RequestMapping(value = "boardWrite", method = RequestMethod.GET)
+	public String boardWrite() {
+		return "board/boardWrite";
 	}
 }

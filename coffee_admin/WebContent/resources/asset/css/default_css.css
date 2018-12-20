@@ -27,3 +27,12 @@ table{text-align: center;margin-top: 15px;}
 .search{width: 300px;padding-bottom: 2px;height: 30px;}
 .sBox{width: 90;height: 30px;}
 .sButton{width: 60px;height: 30px;}
+.s170d16{width: 170px;height: 16px;margin-right: 65px;}
+.s170d16t5{width: 170px;height: 16px;margin-top: 25px;}
+.n10d1{width: 200px;height: 20px;}
+.abs {position: absolute;margin-left: -100px;}
+
+/* id */
+#loginBtn{width: 60px;height: 46px;margin-left: 75px;}
+#loginF{width: 250px;}
+#loginF a{margin-top: 50px;margin-left: 75px;text-decoration: none;color: black;}
