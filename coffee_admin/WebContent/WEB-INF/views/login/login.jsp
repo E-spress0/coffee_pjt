@@ -12,7 +12,7 @@
 <section>
 	<div class="loginTable" align="center">
 		<br/>
-		<form action="loginCheck" id="loginF">
+		<form action="loginCheck" id="loginF" method="post">
 				<input type="text" class="s170d16 abs" name="userId">
 				<input type="password" class="s170d16t5 abs" name="userPass">
 				<input type="button"  id="loginBtn" class="abs" value="로그인">

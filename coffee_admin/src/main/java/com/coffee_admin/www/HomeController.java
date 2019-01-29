@@ -1,9 +1,13 @@
 package com.coffee_admin.www;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +82,66 @@ public class HomeController {
 		return "login/login";
 	}
 
+	/////////////////////////// upload test/////////////////////////
+	@RequestMapping(value = "/uptest", method = RequestMethod.GET)
+	public String uptest() {
+		return "board/uptest";
+	}
+
+	/*@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
+	public void upinsert(MultipartFile file) throws Exception {
+		logger.info("upload() POST 호출");
+		logger.info("파일 이름: {}", file.getOriginalFilename());
+		logger.info("파일 크기: {}", file.getSize());
+	
+		saveFile(file);
+	}*/
+
+
+	@RequestMapping(value = "/fileuploads", method = RequestMethod.POST)
+	public void upinserts(MultipartFile[] files) throws Exception {
+		String rs = "";
+		for (MultipartFile f : files) {
+			rs += saveFile(f);
+		}
+		System.out.println(rs);
+	}
+
+	private static final String UPLOAD_PATH = "C:\\dev_test\\upload";
+
+	private String saveFile(MultipartFile file) {
+
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddkkmmss");
+
+		//		String thisday = sdf.format(today);
+
+		// 파일 이름 변경
+		UUID uuid = UUID.randomUUID();
+		String saveName = sdf.format(today) + "_" + uuid + "_" + file.getOriginalFilename();
+
+		logger.info("saveName: {}", saveName);
+
+		// 저장할 File 객체를 생성(껍데기 파일)
+		File saveFile = new File(UPLOAD_PATH, saveName); // 저장할 폴더 이름, 저장할 파일 이름
+
+		try {
+			file.transferTo(saveFile); // 업로드 파일에 saveFile이라는 껍데기 입힘
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return saveName;
+	}
+
+
+	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
+	public String loginCheck() {
+
+		return "";
+	}
+
 	//default 게시판
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	public String board(Model model, HttpSession session, @ModelAttribute BoardModel boardModel,
@@ -127,23 +192,6 @@ public class HomeController {
 			boardPagingModel = bService.selectBoardCount(boardPagingModel);
 
 			boardPagingModel = new BoardPagingModel(boardPagingModel.getListCnt(), curPage, key, word);
-
-			/*switch (key) {
-				case 1:
-					boardPagingModel.setKey("title");
-					break;
-				case 2:
-					boardPagingModel.setKey("content");
-					break;
-				case 4:
-					boardPagingModel.setKey("writer");
-					break;
-				default:
-					return "redirect:/board/board_list";
-			}
-			
-			boardPagingModel.setNumberKey(key);
-			boardPagingModel.setWord(word);*/
 
 			List<BoardModel> list = bService.selectBoardList(boardPagingModel);
 			model.addAttribute("boardInfo", list);
