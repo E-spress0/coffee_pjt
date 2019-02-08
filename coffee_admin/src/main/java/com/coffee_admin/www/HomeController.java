@@ -107,10 +107,13 @@ public class HomeController {
 		System.out.println(rs);
 	}
 
+	//업-다운로드 위치 생성
 	private static final String UPLOAD_PATH = "C:\\dev_test\\upload";
 
+	//파일저장 메서드
 	private String saveFile(MultipartFile file) {
 
+		//날짜 지정
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddkkmmss");
 

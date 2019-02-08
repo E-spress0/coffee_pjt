@@ -11,6 +11,5 @@
 	<jsp:include page="../default_layout/header.jsp"></jsp:include>
 	<jsp:include page="../default_layout/nav.jsp"></jsp:include>
 	<jsp:include page="../default_layout/section.jsp"></jsp:include>
-	<jsp:include page="../default_layout/footer.jsp"></jsp:include>
 </body>
 </html>
