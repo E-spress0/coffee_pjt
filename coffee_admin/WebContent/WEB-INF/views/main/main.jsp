@@ -1,15 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" href="resources/asset/css/default_css.css" type="text/css" media="screen">
-	<title>Convenient Board(편리한 게시판)</title>
-</head>
-<body>
-	<jsp:include page="../default_layout/header.jsp"></jsp:include>
-	<jsp:include page="../default_layout/nav.jsp"></jsp:include>
-	<jsp:include page="../default_layout/section.jsp"></jsp:include>
-</body>
-</html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<title>편리한 게시판</title>
+<section id="section">
+	<div>
+		<br>
+		<p>안녕하세요</p>
+	</div>
+</section>

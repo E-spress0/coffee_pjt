@@ -43,7 +43,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String slash() throws Exception {
-		return "redirect:/login.do";
+		return "main";
 	}
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)

@@ -4,10 +4,28 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="home" template="/WEB-INF/views/main/main.jsp">
-		<put-attribute name="title" value=""></put-attribute>
-		<put-attribute name="header" value=""></put-attribute>
-		<put-attribute name="section" value=""></put-attribute>
+	
+<!-- 	기본으로 지정할 타일들 -->
+	<definition name="_copyright" template="/WEB-INF/tiles/tilesJSP/copyright.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/default_layout/header.jsp"/>
+		<put-attribute name="nav" value="/WEB-INF/views/default_layout/nav.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/default_layout/footer.jsp"/>
 	</definition>
+	
+	<definition name="/" extends="_copyright">
+		<put-attribute name="section" value="/WEB-INF/views/main/main.jsp"/>
+	</definition>
+	
+	<definition name="*" extends="_copyright">
+		<put-attribute name="section" value="/WEB-INF/views/{1}.jsp"/>
+	</definition>
+	
+	<definition name="*/*" extends="_copyright">
+		<put-attribute name="section" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	<definition name="*/*/*" extends="_copyright">
+		<put-attribute name="section" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+	</definition>
+	
 </tiles-definitions>

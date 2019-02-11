@@ -164,4 +164,10 @@ public class BoardController {
 	public String boardWrite() {
 		return "board/boardWrite";
 	}
+
+	@RequestMapping(value = "replyWrite", method = RequestMethod.POST)
+	public String replyWrite() {
+
+		return "";
+	}
 }
